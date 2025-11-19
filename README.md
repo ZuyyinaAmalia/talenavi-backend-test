@@ -9,7 +9,6 @@ Repository ini adalah hasil pengerjaan **Technical Test** untuk posisi Backend D
 - **Nama Kandidat:** Zuyyina Amalia
 - **Tech Stack:**  
   - Laravel 12.38.1
-  - PHP 8.4.12 
   - SQLite (Database)  
   - Maatwebsite/Laravel-Excel  
   - Postman  
