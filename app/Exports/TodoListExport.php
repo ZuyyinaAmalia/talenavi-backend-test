@@ -23,7 +23,7 @@ class TodoListExport implements FromCollection, WithHeadings, WithMapping, WithE
         return $this->data;
     }
 
-    // Header kolom untuk file Excel
+    // Mendefinisikan header kolom file Excel
     public function headings(): array {
         return [
             'Title',
@@ -60,7 +60,6 @@ class TodoListExport implements FromCollection, WithHeadings, WithMapping, WithE
                 
                 $event->sheet->setCellValue('D' . $footerRow, 'Total Time: ' . $totalTime);
 
-                // Bold footer
                 $event->sheet->getStyle('A' . $footerRow . ':F' . $footerRow)->getFont()->setBold(true);
             },
         ];

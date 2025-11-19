@@ -41,7 +41,7 @@ class TodoListController extends Controller
             ], 422);
         }
 
-        // Nilai default jika tidak diberi pada request
+        // Set nilai default waktu dan status jika tidak ada request
         $time_tracked = $request->time_tracked ?? 0;
         $status = $request->status ?? 'pending';
 
@@ -57,39 +57,39 @@ class TodoListController extends Controller
         return response()->json(new TodoListResource($todoList), 200);
     }
 
-    // Mengekspor todo list ke excel dengan filter opsional
+    // Melakukan filter pada data yang ingin diekspor
     public function exportExcel(Request $request) 
     {
         $query = TodoList::query();
 
-        // Filter partial match
+        // Filter pada title untuk melakukan pencarian parsial
         if ($request->has('title')) {
             $query->where('title', 'like', '%' . $request->title . '%');
         }
 
-        // Filter assignee (multiple strings)
+        // Filter assignee agar bisa memilih beberapa assignee sekaligus
         if ($request->has('assignee')) {
             $assignees = explode(',', $request->assignee); 
             $query->whereIn('assignee', $assignees);
         }
 
-        // Filter due date (range) 
+        // Filter due date untuk menghasilkan data dalam rentang tanggal tertentu
         if ($request->has('start_date') && $request->has('end_date')) {
             $query->whereBetween('due_date', [$request->start_date, $request->end_date]);
         }
 
-        // Filter time tracked (range)
+        // Filter time tracked untuk menghasilkan data dalam rentang nilai tertentu
         if ($request->has('min_time') && $request->has('max_time')) {
             $query->whereBetween('time_tracked', [$request->min_time, $request->max_time]);
         }
 
-        // Filter status (multiple strings) 
+        // Filter status agar bisa memilih beberapa status sekaligus 
         if ($request->has('status')) {
             $statuses = explode(',', $request->status);
             $query->whereIn('status', $statuses);
         }
 
-        // Filter priority (multiple strings) 
+        // Filter priority agar bisa memilih beberapa priority sekaligus
         if ($request->has('priority')) {
             $priorities = explode(',', $request->priority);
             $query->whereIn('priority', $priorities);

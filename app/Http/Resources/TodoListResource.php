@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 // Resource untuk representasi JSON dari TodoList
 class TodoListResource extends JsonResource
 {
-    // Mengubah model TodoList menjadi array untuk response
+    // Mengubah model TodoList menjadi array 
     public function toArray(Request $request): array
     {
         return [
